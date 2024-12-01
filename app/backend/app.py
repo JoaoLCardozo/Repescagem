@@ -1,12 +1,13 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 import requests
-import time
 
 app = Flask(__name__)
+CORS(app)  # Habilita CORS
 
 def fetch_weather_data():
     try:
-        response = requests.get("https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=London")
+        response = requests.get("https://api.weatherapi.com/v1/current.json?key=15db00a81ebf4b959d710415240112&q=London")
         response.raise_for_status()
         data = response.json()
         return {"temperature": data["current"]["temp_c"], "condition": data["current"]["condition"]["text"]}
@@ -24,7 +25,7 @@ def fetch_backup_weather_data():
 
 def fetch_forecast_data():
     try:
-        response = requests.get("https://api.weatherapi.com/v1/forecast.json?key=YOUR_API_KEY&q=London&days=3")
+        response = requests.get("https://api.weatherapi.com/v1/forecast.json?key=15db00a81ebf4b959d710415240112&q=London&days=3")
         response.raise_for_status()
         data = response.json()
         return {"forecast": data["forecast"]["forecastday"][0]["day"]["condition"]["text"]}
